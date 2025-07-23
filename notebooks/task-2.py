@@ -4,10 +4,16 @@ from typing import List, Tuple, Dict
 
 def load_price_curve(csv_path: str) -> Dict[datetime, float]:
     """
-    Reads a CSV with columns Date, Price and returns a dictionary {date: price}.
+    Reads a CSV with columns Dates, Prices and returns a dictionary {date: price}.
     """
     df = pd.read_csv(csv_path)
-    df['Date'] = pd.to_datetime(df['Date'])
+    # Handle the actual column names from the CSV
+    if 'Dates' in df.columns and 'Prices' in df.columns:
+        df['Date'] = pd.to_datetime(df['Dates'], format='%m/%d/%y')
+        df['Price'] = df['Prices']
+    else:
+        df['Date'] = pd.to_datetime(df['Date'])
+    
     df = df.set_index('Date').sort_index()
     return df['Price'].to_dict()
 
@@ -55,7 +61,8 @@ def price_gas_storage_contract(
 
 # Test block (can be removed if using as a module)
 if __name__ == "__main__":
-    price_curve = load_price_curve("Nat_Gas.csv")
+    # Use the correct path to the CSV file
+    price_curve = load_price_curve("../data/raw/Nat_Gas.csv")
     
     injection_schedule = [("2022-05-01", 50), ("2022-05-02", 50)]
     withdrawal_schedule = [("2022-06-01", 60), ("2022-06-10", 40)]
