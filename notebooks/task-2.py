@@ -7,7 +7,6 @@ def load_price_curve(csv_path: str) -> Dict[datetime, float]:
     Reads a CSV with columns Dates, Prices and returns a dictionary {date: price}.
     """
     df = pd.read_csv(csv_path)
-    # Handle the actual column names from the CSV
     if 'Dates' in df.columns and 'Prices' in df.columns:
         df['Date'] = pd.to_datetime(df['Dates'], format='%m/%d/%y')
         df['Price'] = df['Prices']
