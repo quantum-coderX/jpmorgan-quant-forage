@@ -160,5 +160,5 @@ if __name__ == "__main__":
     # test mapping
     print("Rating for FICO 780:", rating_fn(780), "(1 best)")
     print("Rating for FICO 650:", rating_fn(650))
-    print("Rating for FICO 540:", rating_fn(540)).
+    print("Rating for FICO 540:", rating_fn(540))
     
